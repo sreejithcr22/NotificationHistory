@@ -1,5 +1,6 @@
 package com.sreejith.notificationhistory.data.repo
 
+import android.app.Application
 import android.content.pm.PackageManager
 import android.service.notification.StatusBarNotification
 import android.util.Log
@@ -8,12 +9,13 @@ import com.sreejith.notificationhistory.data.db.Notification
 import com.sreejith.notificationhistory.data.db.NotificationsDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 
 private const val TAG = "NotificationsRepo"
-class NotificationsRepo(
-    private val notificationsDao: NotificationsDao,
-    private val packageManager: PackageManager
+class NotificationsRepo @Inject constructor(
+     val notificationsDao: NotificationsDao,
+     val app: Application
 ) {
 
     private suspend fun insertNotificationToDb(notification: Notification) {
@@ -64,13 +66,17 @@ class NotificationsRepo(
         }
     }
 
-    private fun getAppNameFromPackage(packageName: String) =
-        packageManager.getApplicationLabel(
+    private fun getAppNameFromPackage(packageName: String): String {
+        val packageManager = app.applicationContext.packageManager
+        return packageManager.getApplicationLabel(
             packageManager.getApplicationInfo(
                 packageName,
                 PackageManager.GET_META_DATA
             )
         ).toString()
+    }
+
+
 
 
 }

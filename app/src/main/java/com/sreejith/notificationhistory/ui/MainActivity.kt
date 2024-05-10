@@ -1,25 +1,24 @@
-package com.sreejith.notificationhistory
+package com.sreejith.notificationhistory.ui
 
 import android.app.NotificationManager
 import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.sreejith.notificationhistory.R
 import com.sreejith.notificationhistory.data.db.Notification
 import com.sreejith.notificationhistory.data.db.NotificationsDb
 import com.sreejith.notificationhistory.data.repo.NotificationsRepo
 import com.sreejith.notificationhistory.service.NotificationService
-import com.sreejith.notificationhistory.ui.NotificationsAdapter
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-private const val TAG = "MainActivity"
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    @Inject lateinit var notificationsRepo: NotificationsRepo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -31,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     private fun checkNotificationAccessPermission() {
         val componentName = ComponentName(packageName, NotificationService::class.java.name)
         val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         if (!notificationManager.isNotificationListenerAccessGranted(componentName)) {
             Log.d("MainActivity", "App has no notification access")
             val notificationAccessSettings: Intent =
@@ -54,9 +53,7 @@ class MainActivity : AppCompatActivity() {
         val notificationsAdapter = NotificationsAdapter(notificationsList)
         recyclerView.adapter = notificationsAdapter
 
-        NotificationsRepo(
-            NotificationsDb.getInstance(applicationContext).notificationsDao(), applicationContext.packageManager
-        ).getAllNotifications()?.observe(this) {
+        notificationsRepo.getAllNotifications()?.observe(this) {
             if (it.size > notificationsList.size) {
                 val newItemsCount = it.size - notificationsList.size
                 Log.i("MainActivity", "$newItemsCount items added")
