@@ -2,7 +2,6 @@ package com.sreejith.notificationhistory.service
 
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
-import com.sreejith.notificationhistory.data.db.NotificationsDb
 import com.sreejith.notificationhistory.data.repo.NotificationsRepo
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -11,8 +10,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-const val TAG = "payload"
 
 @AndroidEntryPoint
 class NotificationService : NotificationListenerService() {

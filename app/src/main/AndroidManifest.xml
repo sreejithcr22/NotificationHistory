@@ -13,6 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NotificationHistory"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.NotificationsListActivity"
+            android:exported="false" />
+
         <service
             android:name=".service.NotificationService"
             android:enabled="true"

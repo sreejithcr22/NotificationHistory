@@ -13,9 +13,10 @@ import javax.inject.Inject
 
 
 private const val TAG = "NotificationsRepo"
+
 class NotificationsRepo @Inject constructor(
-     val notificationsDao: NotificationsDao,
-     val app: Application
+    private val notificationsDao: NotificationsDao,
+    val app: Application
 ) {
 
     private suspend fun insertNotificationToDb(notification: Notification) {
@@ -39,7 +40,7 @@ class NotificationsRepo @Inject constructor(
     }
 
     suspend fun saveNotification(sbn: StatusBarNotification?) {
-       processNotification(sbn)?.let { insertNotificationToDb(it) }
+        processNotification(sbn)?.let { insertNotificationToDb(it) }
     }
 
     private fun processNotification(sbn: StatusBarNotification?): Notification? {
@@ -57,8 +58,7 @@ class NotificationsRepo @Inject constructor(
             val packageName = sbn.packageName
             val postTime = sbn.postTime
             val appName = getAppNameFromPackage(packageName)
-            if(title == "") return null
-            Log.i(TAG, "time = $postTime, title = $title, text = $text, package = $packageName, app = $appName")
+            if (title == "") return null
             Notification(postTime, title, text, packageName, appName)
         } ?: run {
             Log.e(TAG, "notification or bundle null")
@@ -75,8 +75,6 @@ class NotificationsRepo @Inject constructor(
             )
         ).toString()
     }
-
-
 
 
 }
