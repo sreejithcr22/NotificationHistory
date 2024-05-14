@@ -3,8 +3,10 @@ package com.sreejith.notificationhistory.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.sreejith.notificationhistory.R.id
@@ -20,23 +22,27 @@ class NotificationsListActivity : AppCompatActivity() {
     @Inject
     lateinit var notificationsRepo: NotificationsRepo
     private lateinit var notificationsListViewModel: NotificationsListViewModel
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var emptyNotificationsText: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layout.activity_notification_list)
 
         notificationsListViewModel = ViewModelProvider(this)[NotificationsListViewModel::class.java]
-        emptyNotificationsText = findViewById(id.no_notifications)
-        recyclerView = findViewById(id.notification_recycler_view)
         loadNotificationRecyclerView()
+
 
     }
 
     private fun loadNotificationRecyclerView() {
         val notificationsList = ArrayList<Notification>()
         val notificationsAdapter = NotificationsAdapter(notificationsList)
+        val recyclerView: RecyclerView = findViewById(id.notification_recycler_view)
+        val searchView = findViewById<EditText>(id.search)
+        val emptyNotificationsText: TextView = findViewById(id.no_notifications)
+
         recyclerView.adapter = notificationsAdapter
+        searchView.doOnTextChanged { text, _, _, _ ->
+            notificationsAdapter.filter.filter(text)
+        }
 
         notificationsListViewModel.notifications?.observe(this) {
             if (it.size > notificationsList.size) {

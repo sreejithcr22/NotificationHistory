@@ -36,13 +36,13 @@
 
 
     <TextView
-        android:textSize="14sp"
+        android:id="@+id/notification_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/notification_text"
-        app:layout_constraintTop_toBottomOf="@id/notification_title"
-        app:layout_constraintStart_toStartOf="parent"
+        android:fontFamily="sans-serif-light"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/notification_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
