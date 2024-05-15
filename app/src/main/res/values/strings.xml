@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">NotificationHistory</string>
-    <string name="please_grant_notification_access">Please allow notification access</string>
-    <string name="grant_access">Grant Access</string>
+    <string name="app_name">NotifyVault</string>
+    <string name="please_grant_notification_access">Please allow notification permission</string>
+    <string name="grant_access">Allow</string>
     <string name="no_new_notifications">New notifications will appear here!</string>
     <string name="search">Search</string>
 </resources>

@@ -19,7 +19,6 @@
         android:hint="@string/search"
         android:padding="12dp"
         app:layout_constrainedHeight="true"
-        app:layout_constraintBottom_toTopOf="@id/scrollview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
