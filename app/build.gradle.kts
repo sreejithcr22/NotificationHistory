@@ -53,6 +53,7 @@ dependencies {
     implementation ("androidx.recyclerview:recyclerview:1.3.2")
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-compiler:2.44")
+    implementation ("com.github.marlonlom:timeago:4.0.3")
 }
 
 kapt {

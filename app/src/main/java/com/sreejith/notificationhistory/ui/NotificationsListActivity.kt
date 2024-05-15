@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.github.marlonlom.utilities.timeago.TimeAgo
 import com.sreejith.notificationhistory.R.id
 import com.sreejith.notificationhistory.R.layout
 import com.sreejith.notificationhistory.data.db.Notification
@@ -47,7 +48,6 @@ class NotificationsListActivity : AppCompatActivity() {
         notificationsListViewModel.notifications?.observe(this) {
             if (it.size > notificationsList.size) {
                 val newItemsCount = it.size - notificationsList.size
-                Log.i("NotificationsListActivity", "$newItemsCount items added")
                 var i = newItemsCount
                 while (--i >= 0) {
                     notificationsList.add(0, it[i])

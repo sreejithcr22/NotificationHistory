@@ -8,8 +8,10 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.github.marlonlom.utilities.timeago.TimeAgo
 import com.sreejith.notificationhistory.R
 import com.sreejith.notificationhistory.data.db.Notification
+import org.w3c.dom.Text
 
 private const val TAG = "NotificationsAdapter"
 
@@ -21,10 +23,12 @@ class NotificationsAdapter(private val notificationList: List<Notification>) :
         private val title: TextView = itemView.findViewById(R.id.notification_title)
         private val text: TextView = itemView.findViewById(R.id.notification_text)
         private val appName: TextView = itemView.findViewById(R.id.notification_appName)
+        private val notificationTime: TextView = itemView.findViewById(R.id.notificationTime)
         fun setData(notification: Notification) {
             title.text = notification.title
             text.text = notification.text
             appName.text = notification.appName
+            notificationTime.text = TimeAgo.using(notification.postTime)
         }
     }
 
